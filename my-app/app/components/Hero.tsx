@@ -8,6 +8,10 @@ export default function Hero() {
       const x = e.clientX;
       const y = e.clientY;
 
+      const grid = document.getElementById("grid");
+
+      if (!grid) return;
+
       grid.style.backgroundPosition = `${x * 0.05}px ${y * 0.05}px`;
       grid.style.opacity = "0.9";
     };
@@ -28,7 +32,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-blue-700 text-white overflow-hidden">
-
       {/* GRID BACKGROUND */}
       <div
         id="grid"
@@ -41,7 +44,6 @@ export default function Hero() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
-
         {/* LEFT CONTENT */}
         <div>
           <p className="bg-white/20 inline-block px-3 py-1 rounded-full text-sm mb-4">
@@ -87,9 +89,7 @@ export default function Hero() {
 
         {/* RIGHT CARD */}
         <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/20">
-          <h3 className="text-lg font-semibold mb-4">
-            Live Kiraya Calculator
-          </h3>
+          <h3 className="text-lg font-semibold mb-4">Live Kiraya Calculator</h3>
 
           <div className="space-y-3 text-sm">
             <div className="flex justify-between border-white/20 border-b-2 pb-4">
@@ -100,14 +100,14 @@ export default function Hero() {
               <span>₹5/din</span>
             </div>
 
-                <div className="flex justify-between border-white/20 border-b-2 pb-4">
+            <div className="flex justify-between border-white/20 border-b-2 pb-4">
               <div className="flex items-center gap-[4px]">
                 <input type="checkbox" className="w-4 h-4" />
                 <span>Patra (20 pcs)</span>
               </div>
               <span>₹8/din</span>
             </div>
-                <div className="flex justify-between border-white/20 border-b-2 pb-4">
+            <div className="flex justify-between border-white/20 border-b-2 pb-4">
               <div className="flex items-center gap-[4px]">
                 <input type="checkbox" className="w-4 h-4" />
                 <span>Chali</span>
@@ -119,14 +119,11 @@ export default function Hero() {
           <div className="mt-6 bg-white/20 p-4 rounded-lg flex justify-between items-center">
             <div>
               <p className="text-xs">12 din ka kul kiraya</p>
-              <p className="text-xs text-blue-200">
-                Lana + Lejana included
-              </p>
+              <p className="text-xs text-blue-200">Lana + Lejana included</p>
             </div>
             <h2 className="text-xl font-bold">₹5,920</h2>
           </div>
         </div>
-
       </div>
     </section>
   );
