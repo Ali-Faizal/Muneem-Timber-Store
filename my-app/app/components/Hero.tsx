@@ -1,24 +1,23 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Hero() {
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
-      const grid = document.getElementById("grid");
+      if (!gridRef.current) return;
+
       const x = e.clientX;
       const y = e.clientY;
 
-      const grid = document.getElementById("grid");
-
-      if (!grid) return;
-
-      grid.style.backgroundPosition = `${x * 0.05}px ${y * 0.05}px`;
-      grid.style.opacity = "0.9";
+      gridRef.current.style.backgroundPosition = `${x * 0.05}px ${y * 0.05}px`;
+      gridRef.current.style.opacity = "0.9";
     };
 
     const handleLeave = () => {
-      const grid = document.getElementById("grid");
-      grid.style.opacity = "0.2";
+      if (!gridRef.current) return;
+      gridRef.current.style.opacity = "0.2";
     };
 
     window.addEventListener("mousemove", handleMove);
@@ -32,9 +31,10 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-blue-700 text-white overflow-hidden">
+      
       {/* GRID BACKGROUND */}
       <div
-        id="grid"
+        ref={gridRef}
         className="absolute inset-0 opacity-20 transition-all duration-300"
         style={{
           backgroundImage:
@@ -44,6 +44,7 @@ export default function Hero() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
+        
         {/* LEFT CONTENT */}
         <div>
           <p className="bg-white/20 inline-block px-3 py-1 rounded-full text-sm mb-4">
@@ -107,6 +108,7 @@ export default function Hero() {
               </div>
               <span>₹8/din</span>
             </div>
+
             <div className="flex justify-between border-white/20 border-b-2 pb-4">
               <div className="flex items-center gap-[4px]">
                 <input type="checkbox" className="w-4 h-4" />
@@ -124,6 +126,7 @@ export default function Hero() {
             <h2 className="text-xl font-bold">₹5,920</h2>
           </div>
         </div>
+
       </div>
     </section>
   );
