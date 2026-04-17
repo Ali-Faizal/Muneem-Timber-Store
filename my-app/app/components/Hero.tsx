@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 export default function Hero() {
   useEffect(() => {
-    const handleMove = (e: MouseEvent)) => {
+    const handleMove = (e: MouseEvent) => {
       const grid = document.getElementById("grid");
       const x = e.clientX;
       const y = e.clientY;
