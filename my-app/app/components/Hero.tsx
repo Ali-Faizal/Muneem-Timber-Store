@@ -8,8 +8,8 @@ export default function Hero() {
       const x = e.clientX;
       const y = e.clientY;
 
-      grid.style.backgroundPosition = `${x * 0.02}px ${y * 0.02}px`;
-      grid.style.opacity = "0.4";
+      grid.style.backgroundPosition = `${x * 0.05}px ${y * 0.05}px`;
+      grid.style.opacity = "0.9";
     };
 
     const handleLeave = () => {
@@ -92,17 +92,27 @@ export default function Hero() {
           </h3>
 
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span>Balli (50 pcs)</span>
+            <div className="flex justify-between border-white/20 border-b-2 pb-4">
+              <div className="flex items-center gap-[4px]">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Balli (50 pcs)</span>
+              </div>
               <span>₹5/din</span>
             </div>
-            <div className="flex justify-between">
-              <span>Patra (20 pcs)</span>
+
+                <div className="flex justify-between border-white/20 border-b-2 pb-4">
+              <div className="flex items-center gap-[4px]">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Patra (20 pcs)</span>
+              </div>
               <span>₹8/din</span>
             </div>
-            <div className="flex justify-between">
-              <span>Chali</span>
-              <span>₹6/din</span>
+                <div className="flex justify-between border-white/20 border-b-2 pb-4">
+              <div className="flex items-center gap-[4px]">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Chali</span>
+              </div>
+              <span>₹9/din</span>
             </div>
           </div>
 

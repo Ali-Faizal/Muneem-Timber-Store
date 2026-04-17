@@ -5,7 +5,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md  ">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         
         {/* LEFT - LOGO */}
@@ -31,9 +31,10 @@ export default function Navbar() {
         </div>
 
         {/* MOBILE RIGHT */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-3 ">
           <button className="text-black">Login</button>
-
+          <button className="text-black">Call Now</button>
+         
           {/* MENU BUTTON */}
           <button
             onClick={() => setOpen(!open)}
@@ -46,7 +47,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden bg-white px-4 pb-4 space-y-3 text-black">
+        <div className="md:hidden bg-white px-4 pb-4 space-y-3 text-black z-50">
           <a href="#" className="block">Items</a>
           <a href="#" className="block">Services</a>
           <a href="#" className="block">Contact</a>
