@@ -43,67 +43,63 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <div className="bg-[#E3F0FF] px-4 md:px-10 py-12">
+    <section id="services" className="bg-gradient-to-br from-blue-50 to-blue-100 px-6 py-16">
+      <div className="max-w-7xl mx-auto">
+        {/* HEADING */}
+        <div className="mb-12">
+          <p className="text-[11px] font-medium text-blue-600 tracking-wide">HAMARI SERVICES</p>
 
-      {/* HEADING */}
-      <div className="mb-10">
-        <p className="text-sm text-blue-500 font-medium">Hamari Services</p>
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold text-gray-900 mt-3">
+            Sirf Kiraya Nahi — Poora Ghar Banwao
+          </h2>
 
-        <h2 className=" bg-white/20 text-2xl md:text-4xl font-bold text-gray-800">
-          Sirf Kiraya Nahi —
-          <span className="text-blue-600"> Poora Ghar Banwao Humse</span>
-        </h2>
+          <p className="text-base leading-[1.7] text-gray-700 mt-4 max-w-2xl">
+            Timber kiraye ke saath hum aapko poori construction team, mistri, plumber, electrician — sab kuch ek jagah se dete hain.
+          </p>
+        </div>
 
-        <p className="text-gray-500 mt-2 text-sm md:text-base">
-          Timber kiraye ke saath hum aapko poori construction team bhi dete hain
-        </p>
-      </div>
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+          {services.map((item, i) => (
+            <div
+              key={i}
+              className="group bg-white rounded-[20px] p-7 border border-blue-100 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden"
+            >
+              {/* TOP BORDER ANIMATION */}
+              <div className="absolute top-0 left-0 h-1 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* ICON */}
+              <div className="text-blue-600 text-3xl mb-4">
+                {item.icon}
+              </div>
 
-        {services.map((item, i) => (
-          <div
-            key={i}
-            className="group bg-white p-6 rounded-xl border border-gray-200 
-            transition-all duration-300 hover:-translate-y-2 hover:shadow-lg relative overflow-hidden"
-          >
+              {/* TITLE */}
+              <h3 className="text-[18px] font-bold text-gray-900">
+                {item.title}
+              </h3>
 
-            {/* TOP BORDER ANIMATION */}
-            <div className="absolute top-0 left-0 h-[3px] w-0 bg-blue-600 
-            transition-all duration-300 group-hover:w-full"></div>
+              {/* DESC */}
+              <p className="text-[13.5px] leading-[1.65] text-gray-700 mt-3">
+                {item.desc}
+              </p>
 
-            {/* ICON */}
-            <div className="text-blue-600 text-xl mb-4">
-              {item.icon}
+              {/* TAGS */}
+              {item.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {item.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-
-            {/* TITLE */}
-            <h3 className="text-lg font-semibold text-gray-800">
-              {item.title}
-            </h3>
-
-            {/* DESC */}
-            <p className="text-sm text-gray-500 mt-2">
-              {item.desc}
-            </p>
-
-            {/* TAGS */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {item.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-          </div>
-        ))}
-
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }   

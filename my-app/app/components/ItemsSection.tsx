@@ -40,70 +40,66 @@ const items = [
     icon: <FaPlus />,
   },
   {
-    name: "Plai",
-    desc: "Plywood sheets — false ceiling aur shuttering",
-    price: 12,
-    icon: <FaSquare />,
+    name: "Teen",
+    desc: "Corrugated iron sheets — roofing ke liye",
+    price: 7,
+    icon: <FaPlus />,
   },
   {
-    name: "Centering Plate",
-    desc: "Steel plates — slab construction ke liye",
-    price: 15,
-    icon: <FaGripLines />,
+    name: "Teen",
+    desc: "Corrugated iron sheets — roofing ke liye",
+    price: 7,
+    icon: <FaPlus />,
   },
 ];
 
 export default function ItemsSection() {
   return (
-    <div className="px-4 md:px-10 py-10">
+    <section id="items" className="px-6 py-16 bg-white">
+      <div className="max-w-7xl mx-auto">
+        {/* TOP TEXT */}
+        <div className="mb-12">
+          <p className="text-[11px] font-medium text-blue-600 tracking-wide">KIRAYA ITEMS</p>
 
-      {/* TOP TEXT */}
-      <div className="mb-8">
-        <p className="text-sm text-blue-500 font-medium">Kiraya Items</p>
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold text-gray-900 mt-3">
+            Hamare Saare Samaan
+          </h2>
 
-        <h1 className="text-2xl md:text-4xl font-bold text-gray-800">
-          Hamare Saare Samaan
-        </h1>
+          <p className="text-base leading-[1.7] text-gray-600 mt-4 max-w-2xl">
+            Chali, Balli, Patra aur construction materials — jo chahiye wo select karo aur bill banao. Delivery + Installation sab included!
+          </p>
+        </div>
 
-        <p className="text-gray-500 mt-2 text-sm md:text-base">
-          Photo dekho, rate samjho — jo chahiye wo select karo aur bill banao
-        </p>
-      </div>
+        {/* GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="border border-blue-100 rounded-2xl p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-blue-600"
+            >
+              {/* ICON */}
+              <div className="text-blue-600 text-2xl mb-3">
+                {item.icon}
+              </div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {/* NAME */}
+              <h3 className="text-[15px] font-bold text-gray-900">
+                {item.name}
+              </h3>
 
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 
-            transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:bg-[rgb(182, 209, 240)]- hover:shadow-md"
-          >
+              {/* DESC */}
+              <p className="text-xs text-gray-600 mt-1.5 leading-[1.5]">
+                {item.desc}
+              </p>
 
-            {/* ICON */}
-            <div className="text-blue-500 text-xl mb-3">
-              {item.icon}
+              {/* PRICE */}
+              <p className="text-blue-700 font-bold mt-3 text-[13px]">
+                ₹{item.price} / din
+              </p>
             </div>
-
-            {/* NAME */}
-            <h2 className="font-semibold text-gray-800">
-              {item.name}
-            </h2>
-
-            {/* DESC */}
-            <p className="text-xs text-gray-500 mt-1">
-              {item.desc}
-            </p>
-
-            {/* PRICE */}
-            <p className="text-blue-600 font-medium mt-3 text-sm ">
-              ₹{item.price} / din
-            </p>
-
-          </div>
-        ))}
-
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
