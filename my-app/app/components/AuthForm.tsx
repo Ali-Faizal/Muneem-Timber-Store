@@ -111,7 +111,7 @@ export default function AuthForm() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-2xl text-center tracking-widest"
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-              maxLength="6"
+              maxLength={6}
             />
           </div>
 
