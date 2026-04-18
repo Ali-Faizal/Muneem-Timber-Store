@@ -79,7 +79,7 @@ export default function AuthForm() {
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-lg"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                maxLength="10"
+                maxLength={10}
               />
             </div>
           </div>
