@@ -55,35 +55,3 @@ export default function LoginPage() {
   )
 }
 
-// export default function LoginPage() {
-//   return (
-//     <motion.div
-//       initial={{ y: '-100%', opacity: 0 }}
-//       animate={{ y: 0, opacity: 1 }}
-//       transition={{ duration: 0.6, ease: 'easeOut' }}
-//       className="min-h-screen flex items-center justify-center bg-[#0D1B2A]/80 backdrop-blur-md"
-//     >
-//       {/* Glass Card */}
-//       <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/20">
-//         <AuthForm />
-//       </div>
-//     </motion.div>
-//   )
-// }
-// import { motion } from 'framer-motion'
-// import AuthForm from '../components/AuthForm'
-
-// export default function LoginPage() {
-//   return (
-//     <motion.div
-//       initial={{ y: '-100%' }}
-//       animate={{ y: 0}}
-//       transition={{ duration: 0.5 }}
-//       className="min-h-screen flex items-center justify-center bg-[#0D1B2A]"
-//     >
-//       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
-//         <AuthForm />
-//       </div>
-//     </motion.div>
-//   )
-// }

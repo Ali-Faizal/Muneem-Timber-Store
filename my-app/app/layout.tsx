@@ -1,36 +1,39 @@
 import type { Metadata } from "next";
-import { Inter, DM_Sans, DM_Mono } from "next/font/google";
+import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 
-// Font imports
-const inter = Inter({
+// Fonts
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["700", "800"],
+  variable: "--font-syne",
 });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
+  variable: "--font-dm",
 });
 
 const dmMono = DM_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
   weight: ["400", "500"],
+  variable: "--font-mono",
 });
 
+// Metadata
 export const metadata: Metadata = {
   title: "Muneem Timber Store - Hardoi, UP",
-  description: "Timber Kiraya aur Construction Services - Hardoi ke sabse bharosemand timber store",
+  description:
+    "Timber Kiraya aur Construction Services - Hardoi ke sabse bharosemand timber store",
 };
 
+// Layout
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <head>
@@ -39,8 +42,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+
       <body
-        className={`${inter.variable} ${dmSans.variable} ${dmMono.variable} min-h-full flex flex-col font-body`}
+        className={`${syne.variable} ${dmSans.variable} ${dmMono.variable}`}
       >
         {children}
       </body>
