@@ -5,6 +5,8 @@ import contactData from '../data/contact'
 import { Phone, MessageCircle, MapPin } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import AnnouncementBar from '../components/AnnouncementBar'
+import Footer from '../components/Footer'
+import logo from '../imagesection/WhatsApp_icon.png'
 
 export default function ContactPage() {
 
@@ -108,43 +110,79 @@ export default function ContactPage() {
       </div>
 
       {/* FULL WIDTH WHITE STRIP */}
-      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-white py-10 mt-12">
+     <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-white py-16 mt-12">
 
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+  <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
 
-          {/* CALL */}
-          <a
-            href={`tel:${contactData.phone}`}
-            className="text-black border border-black rounded-[20px] text-center py-5 md:py-6 hover:bg-blue-500 hover:text-white transition"
-          >
-            <Phone className="mx-auto mb-2" size={28} />
-            <p className="font-bold text-[15px] md:text-[16px]">Call Karein</p>
-          </a>
+    {/* CARD */}
+    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
 
-          {/* WHATSAPP */}
-          <a
-            href={`https://wa.me/${contactData.whatsapp}`}
-            target="_blank"
-            className="bg-green-500 text-white rounded-[20px] text-center py-5 md:py-6"
-          >
-            <MessageCircle className="mx-auto mb-2" size={28} />
-            <p className="font-bold text-[15px] md:text-[16px]">WhatsApp Karein</p>
-          </a>
+      {/* LOGO */}
+      <img
+        src={logo.src}
+        alt="logo"
+        className="w-14 h-14 mx-auto mb-3 object-contain "
+      />
 
-          {/* LOCATION */}
-          <a
-            href={`https://maps.google.com/?q=${contactData.address}`}
-            target="_blank"
-            className="bg-[#1251A3] text-white rounded-[20px] text-center py-5 md:py-6"
-          >
-            <MapPin className="mx-auto mb-2" size={28} />
-            <p className="font-bold text-[15px] md:text-[16px]">Location Dekho</p>
-          </a>
+      {/* TITLE */}
+      <p className="font-bold text-lg" style={{ color: '#688EC1' }}>Call Karein</p>
 
-        </div>
-      </div>
+      {/* TIMING */}
+      <p className="text-gray-500 text-sm mt-1">
+        Subah 8 baje se raat 9 baje tak
+      </p>
+
+      {/* BUTTON */}
+      <a
+        href="tel:9580716752"
+        className="mt-4 inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+      >
+        Call Now
+      </a>
+    </div>
+
+    {/* WHATSAPP */}
+    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <MessageCircle className="mx-auto mb-3 text-green-500" size={30} />
+
+       <p className="font-normal text-xs" style={{ color: '#1251A3' }}>
+       Sampark kare
+      </p>
+      <p className="font-bold text-lg " style={{ color: '#688EC1' }} >WhatsApp Karein</p>
+
+      <a
+        href={`https://wa.me/919580716752`}
+        target="_blank"
+        className="mt-4 inline-block bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
+      >
+        Chat Now
+      </a>
+    </div>
+
+    {/* LOCATION */}
+    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <MapPin className="mx-auto mb-3 text-blue-600" size={30}   />
+      <p className=" mx-auto mb-3 mt-5 font-normal text-xs" style={{ color: '#1251A3' }}>
+       Bilgrsam Chungi Hardoi
+      </p>
+      <p className="font-bold text-xl" style={{ color: '#688EC1' }}>
+        Location Dekho
+      </p>
+
+      <a
+        href={`https://maps.google.com/?q=${contactData.address}`}
+        target="_blank"
+        className="mt-4 inline-block bg-[#1251A3] text-white px-5 py-2 rounded-lg hover:bg-[#0f3f82] transition"
+      >
+        Open Map
+      </a>
+    </div>
+
+  </div>
+</div>
 
     </div>
+    <Footer/>
     </>
   )
 }

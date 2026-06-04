@@ -1,4 +1,5 @@
 import AnnouncementBar from "../components/AnnouncementBar";
+import Footer from "../components/Footer";
 import ItemCard from "../components/ItemCard";
 import Navbar from "../components/Navbar";
 import items from "../data/items";
@@ -55,6 +56,7 @@ export default function ItemsPage() {
         </button>
       </div>
     </div>
+    <Footer />  
     </>
   );
 }

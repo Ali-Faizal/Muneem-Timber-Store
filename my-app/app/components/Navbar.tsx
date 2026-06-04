@@ -16,12 +16,12 @@ export default function Navbar() {
         
         {/* LEFT - LOGO */}
         <div className="text-black font-[Syne]">
-          <h1 className="text-[17px] font-extrabold">
+         <Link href="/"> <h1 className="text-[17px] font-extrabold">
             Muneem Timber
           </h1>
           <p className="font-mono text-[10px] text-[#64748B] tracking-[0.06em]">
             Hardoi, UP · Since 1998
-          </p>
+          </p></Link>
         </div>
 
         {/* CENTER MENU (DESKTOP) */}
@@ -82,7 +82,7 @@ export default function Navbar() {
           <a href="/items" className="block">Items</a>
           <a href="/services" className="block">Services</a>
           <Link href="/contact" className="block">Contact</Link>
-          <a href="#location" className="block">Location</a>
+          <Link href="/location" className="block">Location</Link>
 
           {/* ✅ CALL BUTTON */}
           <a

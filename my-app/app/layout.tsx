@@ -38,6 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link
+         lang="en" suppressHydrationWarning
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=optional"
           rel="stylesheet"
         />
