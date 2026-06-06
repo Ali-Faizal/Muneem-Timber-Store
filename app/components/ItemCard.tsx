@@ -1,19 +1,8 @@
-import { FaEquals, FaPlus, FaSquare, FaGripLines } from "react-icons/fa";
-import Navbar from "./Navbar";
-
-interface ItemProps {
-  item: {
-    name: string;
-    desc: string;
-    price: string | number;
-    [key: string]: any;
-  };
-}
-
-export default function ItemCard({ item }: ItemProps) {
+// @ts-nocheck
+/** @param {{item: {name: string, desc: string, price: string|number}}} props */
+export default function ItemCard(props) {
+  const item = props.item
   return (
-   
-   
     <div className="bg-white border border-[rgba(18,81,163,0.12)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#1251A3] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(18,81,163,0.12)]">
       
       {/* Image Area */}

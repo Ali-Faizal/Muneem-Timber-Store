@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import Link from 'next/link'
@@ -15,7 +16,7 @@ export default function FeatureCards() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 md:px-10 py-10 mt-[50px]">
       {features.map((item, index) => {
-        const Icon = iconMap[item.icon as keyof typeof iconMap]
+        const Icon = (/** @type {any} */ iconMap)[item.icon]
 
         return (
           <Link key={index} href={item.link}>

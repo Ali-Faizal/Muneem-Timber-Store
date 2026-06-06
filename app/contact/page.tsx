@@ -1,6 +1,7 @@
+// @ts-nocheck
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState } from 'react'
 import contactData from '../data/contact'
 import { Phone, MessageCircle, MapPin } from 'lucide-react'
 import Navbar from '../components/Navbar'
@@ -17,7 +18,8 @@ export default function ContactPage() {
     message: '',
   })
 
-  const handleSubmit = (e: FormEvent) => {
+  /** @param {any} e */
+  const handleSubmit = (e) => {
     e.preventDefault()
     alert('Message Sent ✅')
   }

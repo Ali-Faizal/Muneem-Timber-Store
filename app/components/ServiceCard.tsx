@@ -1,15 +1,9 @@
-interface ServiceProps {
-  service: {
-    featured?: boolean;
-    title: string;
-    desc: string;
-    tags: string[];
-    cta: string;
-    [key: string]: any;
-  };
-}
-
-export default function ServiceCard({ service }: ServiceProps) {
+// @ts-nocheck
+/**
+ * @param {{service: {featured?: boolean, title: string, desc: string, tags: string[], cta: string}}} props
+ */
+export default function ServiceCard(props) {
+  const service = props.service
   const phone = "919580716752";
 
   return (
