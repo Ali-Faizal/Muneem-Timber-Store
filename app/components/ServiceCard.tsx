@@ -1,4 +1,15 @@
-export default function ServiceCard({ service }) {
+interface ServiceProps {
+  service: {
+    featured?: boolean;
+    title: string;
+    desc: string;
+    tags: string[];
+    cta: string;
+    [key: string]: any;
+  };
+}
+
+export default function ServiceCard({ service }: ServiceProps) {
   const phone = "919580716752";
 
   return (

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import contactData from '../data/contact'
 import { Phone, MessageCircle, MapPin } from 'lucide-react'
 import Navbar from '../components/Navbar'
@@ -17,20 +17,20 @@ export default function ContactPage() {
     message: '',
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     alert('Message Sent ✅')
   }
 
   return (
   <>
-     < AnnouncementBar/>
+     <AnnouncementBar/>
          <Navbar/>
     <div className="bg-[#1251A3] min-h-screen px-4 md:px-10 py-10 text-white">
 
       {/* HEADING */}
       <div className="max-w-6xl mx-auto mb-10">
-        <h1 className="text-[px] md:text-[34px] font-extrabold font-[var(--font-syne)]">
+        <h1 className="text-[28px] md:text-[34px] font-extrabold font-[var(--font-syne)]">
           Hum Yahan Hain —
           <span className="text-[#90CAF9]"> Ek Call Kaafi Hai</span>
         </h1>

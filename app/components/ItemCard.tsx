@@ -1,6 +1,16 @@
 import { FaEquals, FaPlus, FaSquare, FaGripLines } from "react-icons/fa";
 import Navbar from "./Navbar";
-export default function ItemCard({ item }) {
+
+interface ItemProps {
+  item: {
+    name: string;
+    desc: string;
+    price: string | number;
+    [key: string]: any;
+  };
+}
+
+export default function ItemCard({ item }: ItemProps) {
   return (
    
    
@@ -8,7 +18,6 @@ export default function ItemCard({ item }) {
       
       {/* Image Area */}
       <div className="bg-[#E3F0FF] h-[100px] flex items-center justify-center text-2xl text-[#1251A3]">
-     ()
       </div>
 
       {/* Content */}

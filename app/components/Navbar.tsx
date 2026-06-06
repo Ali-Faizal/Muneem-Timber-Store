@@ -16,15 +16,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         
         {/* LEFT - LOGO */}
+       
         <div className="text-black font-[Syne]">
-         <Link href="/"> <h1 className="text-[17px] font-extrabold">
-            Muneem Timber
-          </h1>
-          <p className="font-mono text-[10px] text-[#64748B] tracking-[0.06em]">
-            Hardoi, UP · Since 1998
-          </p>
-          </Link>
-        </div>
+  <Link href="/">
+    <h1 className="text-[17px] font-extrabold">
+      Muneem Timber
+    </h1>
+    <p className="font-mono text-[10px] text-[#64748B] tracking-[0.06em]">
+      Hardoi, UP · Since 1998
+    </p>
+  </Link>
+</div>
 
         {/* CENTER MENU (DESKTOP) */}
         <div className="hidden md:flex gap-8 text-black font-medium">
@@ -82,7 +84,7 @@ export default function Navbar() {
           <a href="/items" className="block">Items</a>
           <a href="/services" className="block">Services</a>
           <Link href="/contact" className="block">Contact</Link>
-          <Link href="/location" className="block">Location</Link>
+          <Link href="#location" className="block">Location</Link>
 
           {/* ✅ CALL BUTTON */}
           <a
