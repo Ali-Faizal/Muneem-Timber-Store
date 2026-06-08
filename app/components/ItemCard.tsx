@@ -1,7 +1,7 @@
 import { FaEquals, FaPlus, FaSquare, FaGripLines } from "react-icons/fa";
 import Navbar from "./Navbar";
 
-export default function ItemCard({ item }) {
+export default function ItemCard({ item }: { item: any }) {
   return (
     <div className="bg-white border border-[rgba(18,81,163,0.12)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#1251A3] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(18,81,163,0.12)]">
 
