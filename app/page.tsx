@@ -1,5 +1,5 @@
 "use client";
-import AnnouncementBar from "@/app/components/AnnouncementBar";
+import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ItemsSection from "./components/ItemsSection";

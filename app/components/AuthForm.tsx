@@ -1,143 +1,182 @@
-'use client'
-
-import { useState } from 'react'
-import axios from 'axios'
-import { Phone } from 'lucide-react'
+"use client";
+import { useState, useEffect } from "react";
+import { Mail, Lock, User, LogOut } from "lucide-react";
 
 export default function AuthForm() {
-  const [step, setStep] = useState(1)
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const sendOtp = async () => {
-    if (!phone || phone.length < 10) {
-      alert('Valid phone number daalein')
-      return
+  // Check login state
+  useEffect(() => {
+    const user = localStorage.getItem("muneem_user");
+    if (user) {
+      setIsLoggedIn(true);
+      const parsed = JSON.parse(user);
+      setName(parsed.name || parsed.email);
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Email aur password dono enter karein!");
+      return;
     }
 
-    setLoading(true)
     try {
-      const res = await axios.post('/api/send-otp', { phone })
-      if (res.data.success) {
-        setStep(2)
-        alert('OTP sent! Check console for OTP (development only)')
-      } else {
-        alert(res.data.message || 'OTP send nahi hua')
-      }
-    } catch (error) {
-      alert('Error sending OTP')
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+      const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
+      const payload = isLogin ? { email, password } : { email, password, name };
 
-  const verifyOtp = async () => {
-    if (!otp || otp.length !== 6) {
-      alert('6-digit OTP daalein')
-      return
-    }
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    setLoading(true)
-    try {
-      const res = await axios.post('/api/verify-otp', { phone, otp })
-      if (res.data.success) {
-        alert('✅ ' + res.data.message)
-        setStep(1)
-        setPhone('')
-        setOtp('')
-      } else {
-        alert(res.data.message || 'Verification failed')
+      const data = await res.json();
+      if (!res.ok) {
+        alert("❌ Error: " + (data.error || "Authentication failed"));
+        return;
       }
-    } catch (error) {
-      alert('Error verifying OTP')
-      console.error(error)
-    } finally {
-      setLoading(false)
+
+      localStorage.setItem("muneem_user", JSON.stringify(data.user));
+      setIsLoggedIn(true);
+      setName(data.user.name);
+
+      alert(isLogin ? "✅ Login Successful! Redirecting..." : "✅ Account Created Successfully! Redirecting...");
+      
+      if (data.user.role === "admin") {
+        window.location.href = "/admin/dashboard";
+      } else {
+        window.location.href = "/dashboard";
+      }
+    } catch (err: any) {
+      console.error("Auth submit error:", err);
+      alert("❌ Technical error occurred: " + err.message);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("muneem_user");
+    setIsLoggedIn(false);
+    setEmail("");
+    setPassword("");
+    setName("");
+    alert("👋 Logged out successfully!");
+  };
+
+  if (isLoggedIn) {
+    return (
+      <div className="w-full text-center py-6 space-y-4">
+        <h3 className="font-heading text-lg font-bold text-[#0D1B2A]">
+          Namaste, {name}!
+        </h3>
+        <p className="text-xs text-[#64748B]">
+          Aap successfully logged in hain. Apne dashboard par metrics track karein.
+        </p>
+        <div className="flex flex-col gap-2 pt-2">
+          <button
+            onClick={() => window.location.href = "/dashboard"}
+            className="w-full bg-[#1251A3] text-white py-3 rounded-lg hover:bg-[#0A3578] font-bold text-sm transition"
+          >
+            Dashboard par Chalein
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full bg-slate-100 hover:bg-slate-200 text-[#0D1B2A] py-3 rounded-lg font-bold text-sm transition flex items-center justify-center gap-2"
+          >
+            <LogOut size={16} />
+            Logout Karein
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="w-full">
-      <div className="text-center mb-8">
-        <h2 className="text-[26px] font-extrabold text-gray-900">Muneem Timber</h2>
-        <p className="text-[13px] text-gray-600 mt-1.5">Hardoi, UP · Since 2010</p>
+      <div className="text-center mb-6">
+        <h2 className="text-[26px] font-extrabold text-[#0D1B2A] font-[var(--font-syne)]">
+          Muneem Timber
+        </h2>
+        <p className="text-[13px] text-[#64748B] mt-1.5 font-[var(--font-dm-sans)]">
+          {isLogin ? "Apne account me Sign In karein" : "Naya account register karein"}
+        </p>
       </div>
 
-      {step === 1 && (
-        <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {!isLogin && (
           <div>
-            <label className="block text-[13px] font-bold text-gray-700 mb-2">
-              आपका Mobile Number
+            <label className="block text-xs font-bold text-[#334155] mb-2 uppercase tracking-wide">
+              Poora Naam (Full Name)
             </label>
-            <div className="flex gap-2">
-              <span className="flex items-center px-3 bg-gray-100 rounded-lg text-gray-600">+91</span>
+            <div className="relative">
+              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input
-                type="tel"
-                placeholder="9580716752"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-lg"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                maxLength={10}
+                type="text"
+                placeholder="naam likhein"
+                className="w-full bg-slate-50/50 border border-slate-200 text-sm rounded-xl pl-10 pr-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-[#1251A3] focus:bg-white transition-all duration-200"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
           </div>
+        )}
 
-          <button
-            onClick={sendOtp}
-            disabled={!phone || loading}
-            className="w-full bg-blue-600 text-white py-[13px] rounded-[10px] hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition text-[15px] font-bold flex items-center justify-center gap-3"
-          >
-            <Phone size={18} />
-            {loading ? 'भेज रहे हैं...' : 'OTP भेजें'}
-          </button>
-
-          <p className="text-xs text-gray-500 text-center pt-1">
-            Development mode: OTP console mein dikhaai dega
-          </p>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div className="space-y-4">
-          <div>
-            <label className="block text-[13px] font-bold text-gray-700 mb-2">
-              6-Digit OTP दर्ज करें
-            </label>
+        <div>
+          <label className="block text-xs font-bold text-[#334155] mb-2 uppercase tracking-wide">
+            Email Address
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input
-              type="text"
-              placeholder="000000"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-2xl text-center tracking-widest"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-              maxLength={6}
+              type="email"
+              placeholder="example@gmail.com"
+              className="w-full bg-slate-50/50 border border-slate-200 text-sm rounded-xl pl-10 pr-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-[#1251A3] focus:bg-white transition-all duration-200"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
-
-          <button
-            onClick={verifyOtp}
-            disabled={!otp || otp.length !== 6 || loading}
-            className="w-full bg-green-600 text-white py-[13px] rounded-[10px] hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition text-[15px] font-bold"
-          >
-            {loading ? 'जाँच रहे हैं...' : 'Verify करें'}
-          </button>
-
-          <button
-            onClick={() => {
-              setStep(1)
-              setPhone('')
-              setOtp('')
-            }}
-            className="w-full bg-gray-300 text-gray-700 py-[13px] rounded-[10px] hover:bg-gray-400 transition text-[15px] font-bold"
-          >
-            वापस जाएं
-          </button>
         </div>
-      )}
+
+        <div>
+          <label className="block text-xs font-bold text-[#334155] mb-2 uppercase tracking-wide">
+            Password
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full bg-slate-50/50 border border-slate-200 text-sm rounded-xl pl-10 pr-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-[#1251A3] focus:bg-white transition-all duration-200"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-[#1251A3] hover:bg-[#0A3578] text-white py-[13px] rounded-xl font-bold transition text-sm shadow-sm"
+        >
+          {isLogin ? "Sign In" : "Register Account"}
+        </button>
+      </form>
+
+      <div className="text-center mt-6">
+        <button
+          onClick={() => setIsLogin(!isLogin)}
+          className="text-xs font-bold text-[#1251A3] hover:underline"
+        >
+          {isLogin ? "Naya account banana hai? Register Karein" : "Pehle se account hai? Sign In"}
+        </button>
+      </div>
     </div>
-  )
+  );
 }
-
-
-

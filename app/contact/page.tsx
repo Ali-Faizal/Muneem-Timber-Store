@@ -117,7 +117,7 @@ export default function ContactPage() {
   <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
 
     {/* CARD */}
-    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+    <div className="bg-[#F0F6FF] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
 
       {/* LOGO */}
       <img
@@ -144,25 +144,28 @@ export default function ContactPage() {
     </div>
 
     {/* WHATSAPP */}
-    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
-      <MessageCircle className="mx-auto mb-3 text-green-500" size={30} />
+  <div className="bg-[#F0F6FF] rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+  <MessageCircle className="mx-auto mb-3 text-green-500" size={30} />
 
-       <p className="font-normal text-xs" style={{ color: '#1251A3' }}>
-       Sampark kare
-      </p>
-      <p className="font-bold text-lg " style={{ color: '#688EC1' }} >WhatsApp Karein</p>
+  <p className="font-normal text-xs text-[#1251A3]">
+    Sampark kare
+  </p>
 
-      <a
-        href={`https://wa.me/919580716752`}
-        target="_blank"
-        className="mt-4 inline-block bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
-      >
-        Chat Now
-      </a>
-    </div>
-
+  <p className="font-bold text-lg text-[#688EC1]">
+    WhatsApp Karein
+  </p>
+{/* whatsapp button */}
+  <a
+    href="https://wa.me/919580716752"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-4 inline-block bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
+  >
+    Chat Now
+  </a>
+</div>
     {/* LOCATION */}
-    <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+    <div className="bg-[#F0F6FF] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
       <MapPin className="mx-auto mb-3 text-blue-600" size={30}   />
       <p className=" mx-auto mb-3 mt-5 font-normal text-xs" style={{ color: '#1251A3' }}>
        Bilgrsam Chungi Hardoi
