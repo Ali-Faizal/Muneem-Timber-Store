@@ -56,6 +56,8 @@ export default function DashboardLayout({
     { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
     { label: "Customers", href: "/admin/manage-users", icon: Users },
     { label: "Products", href: "/admin/manage-products", icon: Package },
+    { label: "Manage Workers", href: "/admin/manage-workers", icon: UserCheck },
+    { label: "Service Bookings", href: "/admin/service-requests", icon: Layers },
     { label: "Walk-In Billing", href: "/admin/walkin-billing", icon: Calculator },
     { label: "Invoices Log", href: "/admin/invoices", icon: FileText },
     { label: "Reports", href: "/admin/reports", icon: BarChart2 },

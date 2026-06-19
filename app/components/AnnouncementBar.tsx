@@ -1,9 +1,9 @@
 export default function AnnouncementBar() {
   const announcements = [
-    "🌱 Naya Stock — Bamboo Balli 50% OFF iska saal!",
-    "🚚 FREE Delivery — Hardoi + 30km radius par ₹2000 se upar",
-    "🔨 Expert Mistri — Same day service available ab!",
-    "⭐ Verified Quality — 500+ Happy Customers",
+    "⭐ Alhamdulillah — Serving Hardoi Since 1995",
+    "🌱 Founded by Late Mr. Anees Mansoori — Ek Virasat Jo Aaj Bhi Logon Ka Bharosa Hai",
+    "🔨 Imandari Hamari Pehchaan — Quality • Trust • Service",
+    "🚚 FREE Delivery — Hardoi & Nearby Areas par ₹2000 se upar",
     "📞 Call Now — 9580716752 (Open 8AM - 8PM)",
   ];
 

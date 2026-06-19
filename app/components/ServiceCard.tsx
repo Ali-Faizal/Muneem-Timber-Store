@@ -1,10 +1,27 @@
 // @ts-nocheck
+import Link from "next/link";
+
 /**
  * @param {{service: {featured?: boolean, title: string, desc: string, tags: string[], cta: string}}} props
  */
 export default function ServiceCard(props) {
   const service = props.service
   const phone = "919580716752";
+
+  let linkHref = `tel:${phone}`;
+  if (service.title.includes("Timber Kiraya")) {
+    linkHref = "/items";
+  } else if (service.title.includes("Construction")) {
+    linkHref = "/contact";
+  } else if (service.title.includes("Mistri")) {
+    linkHref = "/services/mistri";
+  } else if (service.title.includes("Plumber")) {
+    linkHref = "/services/plumber";
+  } else if (service.title.includes("Electrician")) {
+    linkHref = "/services/electrician";
+  } else if (service.title.includes("Emergency Manpower")) {
+    linkHref = "/services/emergency-manpower";
+  }
 
   return (
     <div
@@ -66,13 +83,13 @@ export default function ServiceCard(props) {
       </div>
 
       {/* CTA */}
-      <a
-        href={`tel:${phone}`}
+      <Link
+        href={linkHref}
         className={`block mt-[18px] text-[13px] font-semibold
         ${service.featured ? "text-white" : "text-[#1251A3]"}`}
       >
         {service.cta}
-      </a>
+      </Link>
     </div>
   );
 }

@@ -319,7 +319,7 @@ export default function PaymentPage() {
                 Booking Successful!
               </h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
-                Ram Ram! Aapka rental order book ho gaya hai. Ab aap dashboard me status aur booking check kar sakte hain.
+                Aapka rental order book ho gaya hai. Ab aap dashboard me status aur booking check kar sakte hain.
               </p>
             </div>
             <button
