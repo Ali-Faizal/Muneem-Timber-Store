@@ -1,10 +1,11 @@
-// @ts-nocheck
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 /**
  * @param {{service: {featured?: boolean, title: string, desc: string, tags: string[], cta: string}}} props
  */
-export default function ServiceCard(props) {
+export default function ServiceCard(props: any) {
   const service = props.service
   const phone = "919580716752";
 
@@ -24,12 +25,19 @@ export default function ServiceCard(props) {
   }
 
   return (
-    <div
-      className={`relative overflow-hidden rounded-[20px] p-7 border transition-all duration-200 group
+    <motion.div
+      whileHover={{ 
+        y: -6,
+        scale: 1.01,
+        boxShadow: "0 20px 35px rgba(18, 81, 163, 0.08)",
+        borderColor: service.featured ? "#1251A3" : "rgba(18, 81, 163, 0.5)"
+      }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className={`relative overflow-hidden rounded-[20px] p-7 border transition-colors group
       ${
         service.featured
           ? "bg-[#1251A3] border-[#1251A3] text-white"
-          : "bg-white border-[rgba(18,81,163,0.12)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(18,81,163,0.1)]"
+          : "bg-white border-[rgba(18,81,163,0.12)]"
       }`}
     >
       {/* Top Hover Line */}
@@ -67,7 +75,7 @@ export default function ServiceCard(props) {
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5">
-        {service.tags.map((tag, i) => (
+        {service.tags.map((tag: string, i: number) => (
           <span
             key={i}
             className={`px-2.5 py-[3px] rounded-full text-[11px] tracking-[0.04em] font-[var(--font-dm-mono)]
@@ -90,6 +98,6 @@ export default function ServiceCard(props) {
       >
         {service.cta}
       </Link>
-    </div>
+    </motion.div>
   );
 }

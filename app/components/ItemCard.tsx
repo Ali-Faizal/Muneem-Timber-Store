@@ -1,11 +1,21 @@
-import { FaEquals, FaPlus, FaSquare, FaGripLines } from "react-icons/fa";
+"use client";
+import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
-import Navbar from "./Navbar";
+import { motion } from "framer-motion";
 
 export default function ItemCard({ item }: { item: any })  {
   return (
-    <Link href={`/products/${item.slug}`} className="block">
-      <div className="bg-white border border-[rgba(18,81,163,0.12)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#1251A3] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(18,81,163,0.12)] cursor-pointer h-full flex flex-col justify-between">
+    <Link href={`/products/${item.slug}`} className="block h-full">
+      <motion.div 
+        whileHover={{ 
+          y: -6,
+          scale: 1.01,
+          boxShadow: "0 20px 35px rgba(18, 81, 163, 0.08)",
+          borderColor: "rgba(18, 81, 163, 0.5)"
+        }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="bg-white border border-[rgba(18,81,163,0.12)] rounded-2xl overflow-hidden cursor-pointer h-full flex flex-col justify-between"
+      >
 
         {/* Image Area */}
         <div className="bg-[#E3F0FF] h-[100px] flex items-center justify-center text-2xl text-[#1251A3]">
@@ -34,7 +44,7 @@ export default function ItemCard({ item }: { item: any })  {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }

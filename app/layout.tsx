@@ -23,7 +23,7 @@ const dmMono = DM_Mono({
 
 // Metadata
 export const metadata: Metadata = {
-  title: "Muneem Timber Store - Hardoi, UP",
+  title: "Muneem-Timber-Store Hardoi",
   description:
     "Timber Kiraya aur Construction Services - Hardoi ke sabse bharosemand timber store",
 };

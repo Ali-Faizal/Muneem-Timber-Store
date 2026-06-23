@@ -1,6 +1,22 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { Phone, MessageCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Phone, MessageCircle, Sparkles, Calculator, CheckCircle2 } from "lucide-react";
+import { motion, animate } from "framer-motion";
+
+function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const controls = animate(0, value, {
+      duration: 1.5,
+      ease: "easeOut",
+      onUpdate(v) {
+        setCount(Math.floor(v));
+      }
+    });
+    return () => controls.stop();
+  }, [value]);
+  return <>{count}{suffix}</>;
+}
 
 export default function Hero() {
   const gridRef = useRef<HTMLDivElement | null>(null);
@@ -36,110 +52,163 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative bg-blue-700 text-white overflow-hidden py-[72px]">
+    <section className="relative bg-gradient-to-b from-[#1251A3] via-[#0A3578] to-slate-900 text-white overflow-hidden py-20 md:py-28 px-6">
       
       {/* GRID BACKGROUND */}
       <div
         ref={gridRef}
-        className="absolute inset-0 opacity-20 transition-all duration-300"
+        className="absolute inset-0 opacity-20 transition-all duration-300 pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+          backgroundSize: "45px 45px",
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-[60px] items-center">
+      {/* Decorative floating blurred bubbles */}
+      <motion.div 
+        animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
+        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+        className="absolute top-[10%] left-[5%] w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none"
+      />
+      <motion.div 
+        animate={{ y: [0, 15, 0], scale: [1, 0.95, 1] }}
+        transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+        className="absolute bottom-[10%] right-[5%] w-80 h-80 bg-[#FF6B2B]/5 rounded-full blur-3xl pointer-events-none"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* LEFT CONTENT */}
-        <div>
-          <div className="bg-white/20 inline-block px-3 py-1 rounded-full text-xs mb-[18px] backdrop-blur">
-            Hardoi, UP — Online aur Offline
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="lg:col-span-7 space-y-6"
+        >
+          <div className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold backdrop-blur-md text-[#E3F0FF]">
+            <Sparkles size={14} className="text-[#FF6B2B]" />
+            Hardoi, UP — Online aur Offline Centering Kiraya
           </div>
 
-          <h1 className="text-[clamp(2.2rem,4vw,3.4rem)] font-extrabold leading-[1.08] mb-[18px]">
-            Timber Kiraya Ghar Baithke Karein
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.08] tracking-tight font-heading">
+            Timber Kiraya <br />
+            <span className="text-[#90CAF9]">Ghar Baithke Book Karein</span>
           </h1>
 
-          <p className="text-base leading-[1.7] max-w-[460px] mb-8">
-            Chali, Balli, Patra aur construction ke saare samaan ab ghar baithe paayein. Delivery + Expert Mistri — sab kuch ek jagah se!
+          <p className="text-sm md:text-base leading-relaxed text-white/80 max-w-lg">
+            Chali, Balli, Shuttering Patra aur construction ke saare centering materials ab online rate par paayein. Transporters + Expert Mistri — sab kuch ek hi legacy platform se!
           </p>
 
-          {/* BUTTONS */}
-          <div className="flex gap-3 mt-8 flex-wrap">
-            <a
+          {/* BUTTONS: Upgraded with hover scaling and glows */}
+          <div className="flex flex-wrap gap-4 pt-2">
+            <motion.a
+              whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(255,107,43,0.4)" }}
+              whileTap={{ scale: 0.98 }}
               href={`tel:${ctaData.phone}`}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-[13px] rounded-[10px] text-[15px] font-bold flex items-center gap-3 transition"
+              className="bg-[#FF6B2B] text-white px-7 py-3.5 rounded-xl text-sm font-extrabold flex items-center gap-2.5 transition duration-200"
             >
-              <Phone size={18} />
-              Call Now
-            </a>
-            <a 
+              <Phone size={16} />
+              Call Now Support
+            </motion.a>
+            <motion.a 
+              whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(37,211,102,0.3)" }}
+              whileTap={{ scale: 0.98 }}
               href={`https://wa.me/${ctaData.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-[13px] rounded-[10px] text-[15px] font-bold flex items-center gap-3 transition"
+              className="bg-[#25D366] text-white px-7 py-3.5 rounded-xl text-sm font-extrabold flex items-center gap-2.5 transition duration-200"
             >
-              <MessageCircle size={18} />
-              WhatsApp
-            </a>
+              <MessageCircle size={16} />
+              WhatsApp Orders
+            </motion.a>
           </div>
 
-          {/* STATS */}
-          <div className="flex gap-8 mt-10">
+          {/* STATS: Animated Counters */}
+          <div className="flex gap-10 pt-6 border-t border-white/10 max-w-md">
             <div>
-              <h2 className="text-[26px] font-extrabold">500+</h2>
-              <p className="text-xs text-blue-200 opacity-55">Happy Customers</p>
+              <h2 className="text-3xl font-extrabold font-heading text-white">
+                <Counter value={500} suffix="+" />
+              </h2>
+              <p className="text-xs text-white/60 font-semibold mt-1">Happy Customers</p>
             </div>
             <div>
-              <h2 className="text-[26px] font-extrabold">8+</h2>
-              <p className="text-xs text-blue-200 opacity-55">Items Available</p>
+              <h2 className="text-3xl font-extrabold font-heading text-white">
+                <Counter value={8} suffix="+" />
+              </h2>
+              <p className="text-xs text-white/60 font-semibold mt-1">Rent Items</p>
             </div>
             <div>
-              <h2 className="text-[26px] font-extrabold">16yr</h2>
-              <p className="text-xs text-blue-200 opacity-55">Experience</p>
+              <h2 className="text-3xl font-extrabold font-heading text-[#90CAF9]">
+                <Counter value={30} suffix="+ Yr" />
+              </h2>
+              <p className="text-xs text-white/60 font-semibold mt-1">Trust Legacy</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* RIGHT CARD */}
-        <div className="bg-white/10 backdrop-blur-md p-7 rounded-2xl shadow-xl border border-white/20">
-          <h3 className="text-[18px] font-bold mb-6">Kiraya Calculator (12 Din)</h3>
+        {/* RIGHT CARD: Glassmorphic SaaS style UI with floating effect */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ 
+            opacity: 1, 
+            y: [0, -12, 0]
+          }}
+          transition={{ 
+            opacity: { duration: 0.6, ease: "easeOut" },
+            y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }
+          }}
+          className="lg:col-span-5 bg-white/10 border border-white/15 p-6 md:p-8 rounded-3xl backdrop-blur-md shadow-2xl space-y-6 relative overflow-hidden"
+        >
+          <div className="absolute top-[-20%] right-[-20%] w-36 h-36 bg-[#FF6B2B]/10 rounded-full blur-2xl pointer-events-none" />
+          
+          <h3 className="text-lg font-bold flex items-center gap-2 font-heading border-b border-white/10 pb-4">
+            <Calculator size={18} className="text-[#90CAF9]" />
+            Centering Kiraya Estimate (12 Din)
+          </h3>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center border-b border-white/20 pb-3">
+            <div className="flex justify-between items-center border-b border-white/5 pb-3.5">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded" />
-                <span className="text-[13.5px]">Balli (50 pcs)</span>
+                <div className="w-5 h-5 bg-white/20 rounded-md border border-white/10 flex items-center justify-center text-white">
+                  ✓
+                </div>
+                <span className="text-[13.5px] font-semibold text-white/90">Bamboo Balli (50 pcs)</span>
               </label>
-              <span className="text-[13.5px] font-semibold">₹60</span>
+              <span className="text-[13.5px] font-bold font-mono">₹60 / day</span>
             </div>
 
-            <div className="flex justify-between items-center border-b border-white/20 pb-3">
+            <div className="flex justify-between items-center border-b border-white/5 pb-3.5">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded" />
-                <span className="text-[13.5px]">Patra (20 pcs)</span>
+                <div className="w-5 h-5 bg-white/20 rounded-md border border-white/10 flex items-center justify-center text-white">
+                  ✓
+                </div>
+                <span className="text-[13.5px] font-semibold text-white/90">Shuttering Patra (20 pcs)</span>
               </label>
-              <span className="text-[13.5px] font-semibold">₹96</span>
+              <span className="text-[13.5px] font-bold font-mono">₹96 / day</span>
             </div>
 
-            <div className="flex justify-between items-center border-b border-white/20 pb-3">
+            <div className="flex justify-between items-center border-b border-white/5 pb-3.5">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded" />
-                <span className="text-[13.5px]">Chali</span>
+                <div className="w-5 h-5 bg-white/20 rounded-md border border-white/10 flex items-center justify-center text-white">
+                  ✓
+                </div>
+                <span className="text-[13.5px] font-semibold text-white/90">Iron Chali (Plates)</span>
               </label>
-              <span className="text-[13.5px] font-semibold">₹108</span>
+              <span className="text-[13.5px] font-bold font-mono">₹108 / day</span>
             </div>
           </div>
 
-          <div className="mt-8 bg-white/20 p-4 rounded-lg flex justify-between items-center backdrop-blur">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex justify-between items-center mt-6">
             <div>
-              <p className="text-xs text-blue-200">12 din ka total</p>
-              <p className="text-xs text-blue-100">Delivery + Return included</p>
+              <p className="text-[10px] text-white/60">Estimated Cost for 12 days</p>
+              <p className="text-[10px] text-[#90CAF9] font-semibold mt-0.5">Loading & Return support included</p>
             </div>
-            <h2 className="text-[26px] font-extrabold">₹5,920</h2>
+            <div className="text-right">
+              <h2 className="text-2xl font-extrabold font-heading text-white">₹5,920</h2>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

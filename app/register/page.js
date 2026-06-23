@@ -18,8 +18,8 @@ export default function RegisterPage() {
     }
     const userData = { email, name };
     localStorage.setItem("muneem_user", JSON.stringify(userData));
-    alert("✅ Account Created Successfully! Redirecting to Dashboard...");
-    window.location.href = "/dashboard";
+    alert("✅ Account Created Successfully! Redirecting...");
+    window.location.href = "/";
   };
 
   return (

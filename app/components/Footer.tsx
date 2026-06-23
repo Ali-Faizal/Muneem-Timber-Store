@@ -16,9 +16,11 @@ export default function Footer() {
 
           {/* 1️⃣ ABOUT / HERITAGE */}
           <div className="space-y-3">
-            <h2 className="text-lg font-extrabold">
-              Muneem Timber Store
-            </h2>
+            <Link href="/" className="hover:text-[#90CAF9] transition block">
+              <h2 className="text-lg font-extrabold">
+                Muneem Timber Store
+              </h2>
+            </Link>
             <p className="text-[10px] font-mono text-[#90CAF9] uppercase tracking-widest font-bold">
               Serving Hardoi Since 1995
             </p>

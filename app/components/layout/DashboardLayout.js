@@ -52,16 +52,17 @@ export default function DashboardLayout({
 
   // Define Links based on role
   const adminLinks = [
-    { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
-    { label: "Customers", href: "/admin/manage-users", icon: Users },
-    { label: "Products", href: "/admin/manage-products", icon: Package },
-    { label: "Manage Workers", href: "/admin/manage-workers", icon: UserCheck },
-    { label: "Service Bookings", href: "/admin/service-requests", icon: Layers },
-    { label: "Walk-In Billing", href: "/admin/walkin-billing", icon: Calculator },
-    { label: "Invoices Log", href: "/admin/invoices", icon: FileText },
-    { label: "Reports", href: "/admin/reports", icon: BarChart2 },
-    { label: "Settings", href: "/admin/settings", icon: Settings },
+    { label: "Dashboard", href: "/mts-owner-panel-1995/dashboard", icon: LayoutDashboard },
+    { label: "Orders", href: "/mts-owner-panel-1995/orders", icon: ShoppingCart },
+    { label: "Customers", href: "/mts-owner-panel-1995/manage-users", icon: Users },
+    { label: "Products", href: "/mts-owner-panel-1995/manage-products", icon: Package },
+    { label: "Manage Workers", href: "/mts-owner-panel-1995/manage-workers", icon: UserCheck },
+    { label: "Service Bookings", href: "/mts-owner-panel-1995/service-requests", icon: Layers },
+    { label: "Walk-In Billing", href: "/mts-owner-panel-1995/walkin-billing", icon: Calculator },
+    { label: "Invoices Log", href: "/mts-owner-panel-1995/invoices", icon: FileText },
+    { label: "Reports", href: "/mts-owner-panel-1995/reports", icon: BarChart2 },
+    { label: "Activity Logs", href: "/mts-owner-panel-1995/activity-logs", icon: FileText },
+    { label: "Settings", href: "/mts-owner-panel-1995/settings", icon: Settings },
   ];
 
   const userLinks = [
@@ -140,8 +141,10 @@ export default function DashboardLayout({
           <div className="w-64 bg-[#0A3578] text-white flex flex-col h-full shadow-2xl animate-in slide-in-from-left duration-250">
             <div className="p-6 border-b border-white/10 flex justify-between items-center">
               <div>
-                <h2 className="font-heading text-base font-extrabold uppercase">Muneem</h2>
-                <span className="text-[9px] text-[#90CAF9] font-mono">{isAdmin ? "Admin Drawer" : "User Drawer"}</span>
+                <Link href="/" className="block">
+                  <h2 className="font-heading text-base font-extrabold uppercase">Muneem</h2>
+                  <span className="text-[9px] text-[#90CAF9] font-mono">{isAdmin ? "Admin Drawer" : "User Drawer"}</span>
+                </Link>
               </div>
               <button 
                 onClick={() => setMobileOpen(false)}
@@ -206,9 +209,11 @@ export default function DashboardLayout({
             <Menu size={20} />
           </button>
           
-          <h2 className="font-heading text-sm font-extrabold text-[#0D1B2A] tracking-wide uppercase">
-            Muneem Store
-          </h2>
+          <Link href="/">
+            <h2 className="font-heading text-sm font-extrabold text-[#0D1B2A] tracking-wide uppercase">
+              Muneem Store
+            </h2>
+          </Link>
 
           <div className="w-8"></div> {/* Spacer for symmetry */}
         </header>

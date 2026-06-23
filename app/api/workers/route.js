@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/mongodb";
-import { Worker } from "@/lib/models";
+import { Worker, ActivityLog } from "@/lib/models";
 import { NextResponse } from "next/server";
 
 // Sample mock data for seeding if empty
@@ -183,6 +183,19 @@ export async function POST(request) {
     });
 
     await newWorker.save();
+
+    // Log Activity log
+    const date = new Date().toISOString().split("T")[0];
+    const time = new Date().toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit" });
+    const log = new ActivityLog({
+      action: "Worker Added",
+      user: "owner",
+      date,
+      time,
+      affectedRecord: `Name: ${name}, Category: ${category}`
+    });
+    await log.save();
+
     return NextResponse.json({ success: true, worker: newWorker });
   } catch (error) {
     console.error("Workers POST API error:", error);
@@ -233,6 +246,18 @@ export async function PUT(request) {
       );
     }
 
+    // Log Activity log
+    const date = new Date().toISOString().split("T")[0];
+    const time = new Date().toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit" });
+    const log = new ActivityLog({
+      action: "Worker Updated",
+      user: "owner",
+      date,
+      time,
+      affectedRecord: `Worker: ${worker.name}, Category: ${worker.category}`
+    });
+    await log.save();
+
     return NextResponse.json({ success: true, worker });
   } catch (error) {
     console.error("Workers PUT API error:", error);
@@ -263,6 +288,18 @@ export async function DELETE(request) {
         { status: 404 }
       );
     }
+
+    // Log Activity log
+    const date = new Date().toISOString().split("T")[0];
+    const time = new Date().toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit" });
+    const log = new ActivityLog({
+      action: "Worker Deleted",
+      user: "owner",
+      date,
+      time,
+      affectedRecord: `Name: ${worker.name}, Category: ${worker.category}`
+    });
+    await log.save();
 
     return NextResponse.json({ success: true });
   } catch (error) {
