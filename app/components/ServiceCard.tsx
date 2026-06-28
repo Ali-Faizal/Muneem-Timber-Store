@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FaHammer, FaHome, FaWrench, FaTools, FaBolt, FaPhone } from "react-icons/fa";
 
 /**
  * @param {{service: {featured?: boolean, title: string, desc: string, tags: string[], cta: string}}} props
  */
 export default function ServiceCard(props: any) {
-  const service = props.service
+  const service = props.service;
   const phone = "919580716752";
 
   let linkHref = `tel:${phone}`;
@@ -22,6 +23,21 @@ export default function ServiceCard(props: any) {
     linkHref = "/services/electrician";
   } else if (service.title.includes("Emergency Manpower")) {
     linkHref = "/services/emergency-manpower";
+  }
+
+  let IconComponent = FaWrench;
+  if (service.title.includes("Timber Kiraya")) {
+    IconComponent = FaHammer;
+  } else if (service.title.includes("Construction")) {
+    IconComponent = FaHome;
+  } else if (service.title.includes("Mistri")) {
+    IconComponent = FaWrench;
+  } else if (service.title.includes("Plumber")) {
+    IconComponent = FaTools;
+  } else if (service.title.includes("Electrician")) {
+    IconComponent = FaBolt;
+  } else if (service.title.includes("Manpower")) {
+    IconComponent = FaPhone;
   }
 
   return (
@@ -50,11 +66,11 @@ export default function ServiceCard(props: any) {
         className={`w-[52px] h-[52px] rounded-[14px] mb-[18px] flex items-center justify-center text-xl
         ${
           service.featured
-            ? "bg-white/20"
+            ? "bg-white/20 text-white"
             : "bg-[#E3F0FF] text-[#1251A3]"
         }`}
       >
-        ⚙️
+        <IconComponent size={20} />
       </div>
 
       {/* Title */}

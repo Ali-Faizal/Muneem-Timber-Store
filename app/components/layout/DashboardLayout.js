@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { 
   LayoutDashboard, 
   Package, 
@@ -223,6 +225,7 @@ export default function DashboardLayout({
           {children}
         </main>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     </div>
   );
 }

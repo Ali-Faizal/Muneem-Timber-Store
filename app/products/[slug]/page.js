@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { use, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingCart, Calendar, Info, Shield, Truck } from "lucide-react";
 import Link from "next/link";
@@ -11,9 +11,52 @@ import items from "../../data/items";
 export default function ProductDetailPage({ params }) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
-  const item = items.find((i) => i.slug === slug);
-
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(100);
+
+  useEffect(() => {
+    async function loadItem() {
+      try {
+        const res = await fetch("/api/products");
+        if (res.ok) {
+          const data = await res.json();
+          const found = data.find(p => p.slug === slug);
+          if (found) {
+            const fallback = items.find(i => i.slug === slug);
+            setItem({
+              id: found.id || found._id,
+              name: found.name,
+              slug: found.slug,
+              desc: found.desc || fallback?.desc || `${found.name} - Quality construction tool`,
+              price: found.price || `₹${found.dailyRate} per day`,
+              dailyRate: found.dailyRate || fallback?.dailyRate || 0,
+              icon: fallback?.icon || "🪵"
+            });
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadItem();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <>
+        <AnnouncementBar />
+        <Navbar />
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F6FF]">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1251A3]"></div>
+          <p className="mt-2 text-xs text-gray-500">Loading product details...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   if (!item) {
     return (

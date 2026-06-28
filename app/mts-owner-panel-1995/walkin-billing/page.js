@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Plus, Trash2, Printer, Save, FileText, CheckCircle, Calculator } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function WalkInBillingPage() {
   // Form Fields
@@ -25,6 +26,7 @@ export default function WalkInBillingPage() {
   const [notes, setNotes] = useState("");
   const [invoiceNo, setInvoiceNo] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [savedInvoice, setSavedInvoice] = useState(null);
 
   // Load products & generate invoice number
   useEffect(() => {
@@ -108,11 +110,11 @@ export default function WalkInBillingPage() {
   const handleSaveBill = async (e) => {
     if (e) e.preventDefault();
     if (!customerName || !mobileNumber) {
-      alert("⚠️ Grahak ka naam aur mobile number mandatory hain!");
+      toast.warn("⚠️ Grahak ka naam aur mobile number mandatory hain!");
       return;
     }
     if (selectedItems.length === 0) {
-      alert("⚠️ Kam se kam ek product select karein!");
+      toast.warn("⚠️ Kam se kam ek product select karein!");
       return;
     }
 
@@ -145,14 +147,60 @@ export default function WalkInBillingPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        alert("❌ Error: " + (data.error || "Failed to save walkin invoice"));
+        toast.error("❌ Error: " + (data.error || "Failed to save walkin invoice"));
         return;
       }
+      setSavedInvoice(data.bill);
       setShowSuccess(true);
+      toast.success("💾 Bill saved successfully to MongoDB!");
     } catch (err) {
       console.error("Walk-in save error:", err);
-      alert("❌ Technical error: " + err.message);
+      toast.error("❌ Technical error: " + err.message);
     }
+  };
+
+  const handleEmailInvoice = async (inv) => {
+    const emailInput = prompt("📧 Customer ka Email Address enter karein:", "");
+    if (!emailInput) return;
+    
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)) {
+      toast.error("❌ Invalid email format!");
+      return;
+    }
+
+    try {
+      toast.info("⏳ Email send ho raha hai...");
+      const res = await fetch("/api/invoices/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          invoiceNumber: inv.invoiceNumber,
+          email: emailInput
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success("✅ Email successfully sent!");
+      } else {
+        toast.error("❌ Email fail: " + data.error);
+      }
+    } catch (err) {
+      console.error("Email send error:", err);
+      toast.error("❌ Technical error: " + err.message);
+    }
+  };
+
+  const handleWhatsAppInvoice = (inv) => {
+    const phone = inv.phone || mobileNumber || "";
+    const cleanedPhone = phone.replace(/\D/g, "");
+    const formattedPhone = cleanedPhone.length === 10 ? "91" + cleanedPhone : (cleanedPhone.length > 10 ? cleanedPhone : "");
+
+    const itemsText = inv.items.map(item => `• ${item.name} (${item.quantity} units x ₹${item.dailyRate}/day)`).join("\n");
+    const textMessage = `*Muneem Timber Store - Bill Receipt*\n\n*Invoice No:* ${inv.invoiceNumber}\n*Customer:* ${inv.customer}\n*Rental Period:* ${inv.duration} (${inv.startDate} to ${inv.endDate})\n\n*Materials:*\n${itemsText}\n\n*Total Rent:* ${inv.total}\n\nThank you for choosing Muneem Timber Store!`;
+
+    const waUrl = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(textMessage)}`;
+    window.open(waUrl, "_blank");
+    toast.success("📲 WhatsApp sharing link opened!");
   };
 
   const handlePrint = () => {
@@ -168,6 +216,7 @@ export default function WalkInBillingPage() {
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
+    setSavedInvoice(null);
     // Reset forms
     setCustomerName("");
     setMobileNumber("");
@@ -655,10 +704,35 @@ export default function WalkInBillingPage() {
               <h3 className="font-heading text-xl font-extrabold text-[#0D1B2A]">
                 Invoice Saved!
               </h3>
+              {savedInvoice && (
+                <p className="text-xs font-mono font-bold text-[#1251A3] bg-blue-50 py-1 rounded border border-brand-blue/10">
+                  {savedInvoice.invoiceNumber}
+                </p>
+              )}
               <p className="text-xs text-[#64748B] leading-relaxed font-sans">
                 Walk-in customer ka billing record MongoDB me successfully store kar diya gaya hai.
               </p>
             </div>
+
+            {savedInvoice && (
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => handleEmailInvoice(savedInvoice)}
+                  className="bg-purple-50 text-purple-700 hover:bg-purple-100 py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1 border border-purple-200"
+                  title="Email invoice to customer"
+                >
+                  ✉️ Email
+                </button>
+                <button
+                  onClick={() => handleWhatsAppInvoice(savedInvoice)}
+                  className="bg-green-50 text-green-700 hover:bg-green-100 py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1 border border-green-200"
+                  title="Share invoice on WhatsApp"
+                >
+                  💬 WhatsApp
+                </button>
+              </div>
+            )}
+
             <button
               onClick={handleSuccessClose}
               className="w-full bg-[#1251A3] hover:bg-[#0A3578] text-white py-3 rounded-xl font-bold text-sm transition font-heading"

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AnnouncementBar from "../components/AnnouncementBar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import items from "../data/items";
 
 interface SelectedItem {
-  id: number;
+  id: number | string;
   name: string;
   quantity: number;
   rate: number;
@@ -22,34 +22,52 @@ export default function BillingPage() {
   const [transportCost, setTransportCost] = useState(200);
   const [includeGst, setIncludeGst] = useState(false);
 
-  // Default rates based on items data description
-  const defaultRates: { [key: number]: number } = {
-    1: 70,   // Balli
-    2: 80,   // Patra
-    3: 70,   // Chali
-    4: 250,  // Gater
-    5: 200,  // Tech ki Chadar
-    6: 120,  // Sidi
-    7: 70,   // Stool
-    8: 150   // Centering Plate
-  };
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>(
-    items.map(item => ({
-      id: item.id,
-      name: item.name,
-      quantity: 0,
-      rate: defaultRates[item.id] || 100
-    }))
-  );
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const res = await fetch("/api/products");
+        if (res.ok) {
+          const data = await res.json();
+          const mapped = data.map((item: any) => ({
+            id: item.id || String(item._id),
+            name: item.name,
+            quantity: 0,
+            rate: item.dailyRate || 10
+          }));
+          setSelectedItems(mapped);
+        } else {
+          setSelectedItems(items.map(item => ({
+            id: item.id,
+            name: item.name,
+            quantity: 0,
+            rate: item.dailyRate || 10
+          })));
+        }
+      } catch (err) {
+        console.error("Failed to load products in BillingPage:", err);
+        setSelectedItems(items.map(item => ({
+          id: item.id,
+          name: item.name,
+          quantity: 0,
+          rate: item.dailyRate || 10
+        })));
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
 
-  const handleQtyChange = (id: number, qty: number) => {
+  const handleQtyChange = (id: number | string, qty: number) => {
     setSelectedItems(prev =>
       prev.map(item => (item.id === id ? { ...item, quantity: Math.max(0, qty) } : item))
     );
   };
 
-  const handleRateChange = (id: number, rate: number) => {
+  const handleRateChange = (id: number | string, rate: number) => {
     setSelectedItems(prev =>
       prev.map(item => (item.id === id ? { ...item, rate: Math.max(0, rate) } : item))
     );
@@ -223,46 +241,52 @@ export default function BillingPage() {
               </div>
 
               <div className="space-y-4">
-                {selectedItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-slate-50 rounded-xl border border-[rgba(18,81,163,0.06)]"
-                  >
-                    <div className="flex-1">
-                      <span className="text-[14px] font-bold text-[#0D1B2A]">{item.name}</span>
-                      <p className="text-[11px] text-[#64748B]">
-                        M.T.S standard rate prefilled
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      {/* Qty field */}
-                      <div className="w-24">
-                        <label className="block text-[10px] text-[#64748B] uppercase font-bold mb-1">Qty</label>
-                        <input
-                          type="number"
-                          min={0}
-                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-center text-sm font-semibold font-[var(--font-mono)]"
-                          value={item.quantity === 0 ? "" : item.quantity}
-                          placeholder="0"
-                          onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value) || 0)}
-                        />
-                      </div>
-                      
-                      {/* Rate field */}
-                      <div className="w-28">
-                        <label className="block text-[10px] text-[#64748B] uppercase font-bold mb-1">Rate/Day (₹)</label>
-                        <input
-                          type="number"
-                          min={0}
-                          className="w-full bg-white border border-slate-200 rounded-lg p-2 text-center text-sm font-semibold text-[#1251A3] font-[var(--font-mono)]"
-                          value={item.rate}
-                          onChange={(e) => handleRateChange(item.id, parseInt(e.target.value) || 0)}
-                        />
-                      </div>
-                    </div>
+                {loading ? (
+                  <div className="flex justify-center items-center py-12">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1251A3]"></div>
                   </div>
-                ))}
+                ) : (
+                  selectedItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-slate-50 rounded-xl border border-[rgba(18,81,163,0.06)]"
+                    >
+                      <div className="flex-1">
+                        <span className="text-[14px] font-bold text-[#0D1B2A]">{item.name}</span>
+                        <p className="text-[11px] text-[#64748B]">
+                          M.T.S standard rate prefilled
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        {/* Qty field */}
+                        <div className="w-24">
+                          <label className="block text-[10px] text-[#64748B] uppercase font-bold mb-1">Qty</label>
+                          <input
+                            type="number"
+                            min={0}
+                            className="w-full bg-white border border-slate-200 rounded-lg p-2 text-center text-sm font-semibold font-[var(--font-mono)]"
+                            value={item.quantity === 0 ? "" : item.quantity}
+                            placeholder="0"
+                            onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value) || 0)}
+                          />
+                        </div>
+                        
+                        {/* Rate field */}
+                        <div className="w-28">
+                          <label className="block text-[10px] text-[#64748B] uppercase font-bold mb-1">Rate/Day (₹)</label>
+                          <input
+                            type="number"
+                            min={0}
+                            className="w-full bg-white border border-slate-200 rounded-lg p-2 text-center text-sm font-semibold text-[#1251A3] font-[var(--font-mono)]"
+                            value={item.rate}
+                            onChange={(e) => handleRateChange(item.id, parseInt(e.target.value) || 0)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 

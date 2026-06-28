@@ -18,8 +18,12 @@ export default function ItemCard({ item }: { item: any })  {
       >
 
         {/* Image Area */}
-        <div className="bg-[#E3F0FF] h-[100px] flex items-center justify-center text-2xl text-[#1251A3]">
-          <span className="font-[var(--font-syne)] text-xl font-extrabold">{item.name.charAt(0)}</span>
+        <div className="bg-[#E3F0FF] h-[100px] flex items-center justify-center text-4xl">
+          {item.icon && !item.icon.includes(".") ? (
+            <span>{item.icon}</span>
+          ) : (
+            <span className="font-[var(--font-syne)] text-xl font-extrabold text-[#1251A3]">{item.name.charAt(0)}</span>
+          )}
         </div>
 
         {/* Content */}

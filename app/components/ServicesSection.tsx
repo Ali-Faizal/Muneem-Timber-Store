@@ -1,6 +1,7 @@
 "use client";
 
 import { FaHammer, FaHome, FaWrench, FaTools, FaBolt, FaPhone } from "react-icons/fa";
+import Link from "next/link";
 
 const services = [
   {
@@ -60,44 +61,62 @@ export default function ServicesSection() {
 
         {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-          {services.map((item, i) => (
-            <div
-              key={i}
-              className="group bg-white rounded-[20px] p-7 border border-blue-100 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden"
-            >
-              {/* TOP BORDER ANIMATION */}
-              <div className="absolute top-0 left-0 h-1 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
+          {services.map((item, i) => {
+            let linkHref = `tel:919580716752`;
+            if (item.title.includes("Timber Kiraya")) {
+              linkHref = "/items";
+            } else if (item.title.includes("Construction")) {
+              linkHref = "/contact";
+            } else if (item.title.includes("Mistri")) {
+              linkHref = "/services/mistri";
+            } else if (item.title.includes("Plumber")) {
+              linkHref = "/services/plumber";
+            } else if (item.title.includes("Electrician")) {
+              linkHref = "/services/electrician";
+            } else if (item.title.includes("Sampark") || item.title.includes("Call")) {
+              linkHref = "https://wa.me/919580716752";
+            }
 
-              {/* ICON */}
-              <div className="text-blue-600 text-3xl mb-4">
-                {item.icon}
-              </div>
+            return (
+              <Link
+                href={linkHref}
+                key={i}
+                className="group bg-white rounded-[20px] p-7 border border-blue-100 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden block cursor-pointer"
+              >
+                {/* TOP BORDER ANIMATION */}
+                <div className="absolute top-0 left-0 h-1 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
 
-              {/* TITLE */}
-              <h3 className="text-[18px] font-bold text-gray-900">
-                {item.title}
-              </h3>
-
-              {/* DESC */}
-              <p className="text-[13.5px] leading-[1.65] text-gray-700 mt-3">
-                {item.desc}
-              </p>
-
-              {/* TAGS */}
-              {item.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {item.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                {/* ICON */}
+                <div className="text-blue-600 text-3xl mb-4">
+                  {item.icon}
                 </div>
-              )}
-            </div>
-          ))}
+
+                {/* TITLE */}
+                <h3 className="text-[18px] font-bold text-gray-900">
+                  {item.title}
+                </h3>
+
+                {/* DESC */}
+                <p className="text-[13.5px] leading-[1.65] text-gray-700 mt-3">
+                  {item.desc}
+                </p>
+
+                {/* TAGS */}
+                {item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {item.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

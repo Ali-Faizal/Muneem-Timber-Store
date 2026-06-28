@@ -2,9 +2,34 @@ import AnnouncementBar from "../components/AnnouncementBar";
 import Footer from "../components/Footer";
 import ItemCard from "../components/ItemCard";
 import Navbar from "../components/Navbar";
-import items from "../data/items";
+import dbConnect from "@/lib/mongodb";
+import { Product } from "@/lib/models";
+import fallbackItems from "../data/items";
 
-export default function ItemsPage() {
+export const revalidate = 30; // 30 second cache for instant page load speed
+
+export default async function ItemsPage() {
+  await dbConnect();
+  const dbProducts = await Product.find({}).sort({ id: 1 }).lean();
+
+  let productsList = dbProducts;
+  if (dbProducts.length === 0) {
+    productsList = fallbackItems;
+  }
+
+  const itemsList = productsList.map((p: any) => {
+    const localFallback = fallbackItems.find(i => i.slug === p.slug);
+    return {
+      id: p.id || String(p._id),
+      name: p.name,
+      slug: p.slug,
+      desc: p.desc || localFallback?.desc || `${p.name} - Construction tool/material`,
+      price: p.price || `₹${p.dailyRate} per day`,
+      dailyRate: p.dailyRate || localFallback?.dailyRate || 0,
+      icon: localFallback?.icon || "🪵"
+    };
+  });
+
   return (
     <>
     <AnnouncementBar/>
@@ -31,7 +56,7 @@ export default function ItemsPage() {
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
-        {items.map((item) => (
+        {itemsList.map((item) => (
           <ItemCard key={item.id} item={item} />
         ))}
       </div>
