@@ -143,7 +143,19 @@ export default function AuthForm() {
       }
     } catch (err: any) {
       console.error(err);
-      setError("❌ Authentication failed: " + (err.message || err));
+      let errMsg = err.message || err;
+      if (typeof errMsg === "string") {
+        if (errMsg.includes("auth/email-already-in-use")) {
+          errMsg = "⚠️ Yeh Email ID pehle se registered hai! Kripya Sign In (लॉगिन) karein ya doosri Email ID istemaal karein.";
+        } else if (errMsg.includes("auth/wrong-password") || errMsg.includes("auth/user-not-found") || errMsg.includes("auth/invalid-credential")) {
+          errMsg = "❌ Galat Email ya Password! Kripya sahi jaankari enter karein.";
+        } else if (errMsg.includes("auth/weak-password")) {
+          errMsg = "⚠️ Password kam se kam 6 characters ka hona chahiye!";
+        } else if (errMsg.includes("auth/invalid-email")) {
+          errMsg = "⚠️ Kripya sahi Email Address enter karein!";
+        }
+      }
+      setError(errMsg);
     } finally {
       setLoading(false);
     }
