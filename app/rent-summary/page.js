@@ -124,8 +124,8 @@ export default function RentSummaryPage() {
                             <td className="py-4 text-center">
                               <div className="flex items-center justify-center gap-2">
                                 <button
-                                  onClick={() => handleQtyChange(item.slug, item.quantity - 50)}
-                                  className="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-[#0D1B2A] font-bold transition active:scale-95"
+                                  onClick={() => handleQtyChange(item.slug, Math.max(1, item.quantity - 1))}
+                                  className="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-[#0D1B2A] font-bold transition active:scale-95 flex items-center justify-center"
                                 >
                                   -
                                 </button>
@@ -133,8 +133,8 @@ export default function RentSummaryPage() {
                                   {item.quantity}
                                 </span>
                                 <button
-                                  onClick={() => handleQtyChange(item.slug, item.quantity + 50)}
-                                  className="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-[#0D1B2A] font-bold transition active:scale-95"
+                                  onClick={() => handleQtyChange(item.slug, item.quantity + 1)}
+                                  className="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-[#0D1B2A] font-bold transition active:scale-95 flex items-center justify-center"
                                 >
                                   +
                                 </button>

@@ -205,7 +205,7 @@ export default function ProductDetailPage({ params }) {
                   </label>
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => handleQtyChange(qty - 50)}
+                      onClick={() => handleQtyChange(Math.max(1, qty - 1))}
                       className="w-12 h-12 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl flex items-center justify-center text-lg active:scale-95 transition"
                     >
                       -
@@ -218,7 +218,7 @@ export default function ProductDetailPage({ params }) {
                       onChange={(e) => handleQtyChange(parseInt(e.target.value) || 1)}
                     />
                     <button
-                      onClick={() => handleQtyChange(qty + 50)}
+                      onClick={() => handleQtyChange(qty + 1)}
                       className="w-12 h-12 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl flex items-center justify-center text-lg active:scale-95 transition"
                     >
                       +
