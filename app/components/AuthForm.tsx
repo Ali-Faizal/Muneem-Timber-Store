@@ -73,10 +73,15 @@ export default function AuthForm() {
         const firebaseUser = userCredential.user;
 
         if (!firebaseUser.emailVerified) {
-          // Unverified - restrict access and sign out from firebase session
+          // Try sending verification email again just in case
+          try {
+            await sendEmailVerification(firebaseUser);
+          } catch (e) {
+            console.log("Resend on login attempt:", e);
+          }
           await signOut(auth);
           localStorage.removeItem("muneem_user");
-          setError("❌ Email verification pending! Please check your inbox and verify your email before logging in.");
+          setError("❌ Email verification pending! Kripya apna Email Inbox aur SPAM / JUNK folder check karein. Humne Verification Link dobara bhej diya hai.");
           setLoading(false);
           return;
         }
