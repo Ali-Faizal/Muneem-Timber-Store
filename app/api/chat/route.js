@@ -2,6 +2,21 @@ import dbConnect from "@/lib/mongodb";
 import { ChatMessage, OwnerStatus } from "@/lib/models";
 import { NextResponse } from "next/server";
 
+// In-memory fallback message store for robustness
+const memoryDb = {};
+
+function getMockMessages(sessionId) {
+  if (!memoryDb[sessionId]) {
+    memoryDb[sessionId] = [];
+  }
+  return memoryDb[sessionId];
+}
+
+function saveMockMessage(sessionId, message) {
+  const messages = getMockMessages(sessionId);
+  messages.push(message);
+}
+
 // Simple keyword-based smart AI response system
 function getAIResponse(userText) {
   const query = userText.toLowerCase().trim();
@@ -76,7 +91,6 @@ function getAIResponse(userText) {
 
 export async function GET(request) {
   try {
-    await dbConnect();
     const { searchParams } = new URL(request.url);
     const sessionId = searchParams.get("sessionId");
     
@@ -84,7 +98,25 @@ export async function GET(request) {
       return NextResponse.json({ error: "Session ID is required" }, { status: 400 });
     }
     
-    const messages = await ChatMessage.find({ sessionId }).sort({ timestamp: 1 });
+    let messages = [];
+    try {
+      await dbConnect();
+      messages = await ChatMessage.find({ sessionId }).sort({ timestamp: 1 }).lean();
+      
+      if (memoryDb[sessionId] && memoryDb[sessionId].length > 0) {
+        const merged = [...messages];
+        for (const m of memoryDb[sessionId]) {
+          if (!merged.some(x => x.text === m.text && String(x.sender) === String(m.sender))) {
+            merged.push(m);
+          }
+        }
+        messages = merged.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+      }
+    } catch (dbErr) {
+      console.error("Database connection error in Chat GET, using local in-memory fallback:", dbErr);
+      messages = getMockMessages(sessionId);
+    }
+    
     return NextResponse.json(messages);
   } catch (error) {
     console.error("Chat GET error:", error);
@@ -94,43 +126,71 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    await dbConnect();
-    const { sessionId, sender, text, visitorName } = await request.json();
+    const body = await request.json();
+    const { sessionId, sender, text, visitorName } = body;
     
     if (!sessionId || !sender || !text) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
     
-    // Save user message
-    const msg = new ChatMessage({
+    const newMsg = {
       sessionId,
       sender,
       text,
       visitorName: visitorName || "Guest",
       timestamp: new Date()
-    });
-    await msg.save();
+    };
     
-    // If message is from visitor, check if owner is online.
+    let savedMsg = null;
+    let dbSuccess = false;
+    
+    try {
+      await dbConnect();
+      const msg = new ChatMessage(newMsg);
+      savedMsg = await msg.save();
+      dbSuccess = true;
+    } catch (dbErr) {
+      console.error("Database connection error in Chat POST, saving in memory:", dbErr);
+      saveMockMessage(sessionId, newMsg);
+      savedMsg = newMsg;
+    }
+    
     if (sender === "visitor") {
-      const ownerStatus = await OwnerStatus.findOne({});
-      const isOwnerOnline = ownerStatus && (Date.now() - new Date(ownerStatus.lastActive).getTime() < 15000); // 15 seconds
+      let isOwnerOnline = false;
+      if (dbSuccess) {
+        try {
+          const ownerStatus = await OwnerStatus.findOne({});
+          isOwnerOnline = ownerStatus && (Date.now() - new Date(ownerStatus.lastActive).getTime() < 15000);
+        } catch (e) {
+          console.error("Failed to read OwnerStatus:", e);
+        }
+      }
       
       if (!isOwnerOnline) {
-        // Owner is offline. Trigger AI response after a short delay (or immediately in API)
         const aiText = getAIResponse(text);
-        const aiMsg = new ChatMessage({
+        const aiMsg = {
           sessionId,
           sender: "ai",
           text: aiText,
           visitorName: "Muneem AI Helper",
           timestamp: new Date()
-        });
-        await aiMsg.save();
+        };
+        
+        if (dbSuccess) {
+          try {
+            const msg = new ChatMessage(aiMsg);
+            await msg.save();
+          } catch (e) {
+            console.error("Failed to save AI msg to DB:", e);
+            saveMockMessage(sessionId, aiMsg);
+          }
+        } else {
+          saveMockMessage(sessionId, aiMsg);
+        }
       }
     }
     
-    return NextResponse.json({ success: true, message: msg });
+    return NextResponse.json({ success: true, message: savedMsg });
   } catch (error) {
     console.error("Chat POST error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
