@@ -9,13 +9,11 @@ import fallbackItems from "../data/items";
 export const revalidate = 30; // 30 second cache for instant page load speed
 
 export default async function ItemsPage() {
-  let productsList = [];
-  try {
-    await dbConnect();
-    const dbProducts = await Product.find({}).sort({ id: 1 }).lean();
-    productsList = dbProducts.length > 0 ? dbProducts : fallbackItems;
-  } catch (err) {
-    console.error("MongoDB connection failed during build, using fallback items:", err);
+  await dbConnect();
+  const dbProducts = await Product.find({}).sort({ id: 1 }).lean();
+
+  let productsList = dbProducts;
+  if (dbProducts.length === 0) {
     productsList = fallbackItems;
   }
 
