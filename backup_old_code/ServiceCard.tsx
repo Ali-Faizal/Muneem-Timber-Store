@@ -49,7 +49,7 @@ export default function ServiceCard(props: any) {
         borderColor: service.featured ? "#1251A3" : "rgba(18, 81, 163, 0.5)"
       }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className={`relative overflow-hidden rounded-[16px] sm:rounded-[20px] p-4 sm:p-7 border transition-colors group
+      className={`relative overflow-hidden rounded-[20px] p-7 border transition-colors group
       ${
         service.featured
           ? "bg-[#1251A3] border-[#1251A3] text-white"
@@ -63,20 +63,19 @@ export default function ServiceCard(props: any) {
 
       {/* Icon Box */}
       <div
-        className={`w-9 h-9 sm:w-[52px] sm:h-[52px] rounded-[10px] sm:rounded-[14px] mb-3 sm:mb-[18px] flex items-center justify-center text-base sm:text-xl
+        className={`w-[52px] h-[52px] rounded-[14px] mb-[18px] flex items-center justify-center text-xl
         ${
           service.featured
             ? "bg-white/20 text-white"
             : "bg-[#E3F0FF] text-[#1251A3]"
         }`}
       >
-        <span className="sm:hidden"><IconComponent size={16} /></span>
-        <span className="hidden sm:inline"><IconComponent size={20} /></span>
+        <IconComponent size={20} />
       </div>
 
       {/* Title */}
       <h3
-        className={`text-sm sm:text-[18px] font-bold mb-1 sm:mb-2 font-[var(--font-syne)] leading-snug
+        className={`text-[18px] font-bold mb-2 font-[var(--font-syne)]
         ${service.featured ? "text-white" : "text-[#0D1B2A]"}`}
       >
         {service.title}
@@ -84,18 +83,18 @@ export default function ServiceCard(props: any) {
 
       {/* Description */}
       <p
-        className={`text-[11px] sm:text-[13.5px] leading-relaxed mb-2.5 sm:mb-[18px] font-[var(--font-dm-sans)] line-clamp-3
+        className={`text-[13.5px] leading-[1.65] mb-[18px] font-[var(--font-dm-sans)]
         ${service.featured ? "text-white/80" : "text-[#64748B]"}`}
       >
         {service.desc}
       </p>
 
       {/* Tags */}
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1.5">
         {service.tags.map((tag: string, i: number) => (
           <span
             key={i}
-            className={`px-1.5 py-[2px] sm:px-2.5 sm:py-[3px] rounded-full text-[9px] sm:text-[11px] tracking-[0.02em] font-[var(--font-dm-mono)]
+            className={`px-2.5 py-[3px] rounded-full text-[11px] tracking-[0.04em] font-[var(--font-dm-mono)]
             ${
               service.featured
                 ? "bg-white/20 text-white"
@@ -110,7 +109,7 @@ export default function ServiceCard(props: any) {
       {/* CTA */}
       <Link
         href={linkHref}
-        className={`block mt-3 sm:mt-[18px] text-[11px] sm:text-[13px] font-bold hover:underline
+        className={`block mt-[18px] text-[13px] font-semibold
         ${service.featured ? "text-white" : "text-[#1251A3]"}`}
       >
         {service.cta}

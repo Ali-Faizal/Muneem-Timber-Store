@@ -18,34 +18,33 @@ export default function ItemCard({ item }: { item: any })  {
       >
 
         {/* Image Area */}
-        <div className="bg-[#E3F0FF] h-[75px] sm:h-[100px] flex items-center justify-center text-xl sm:text-4xl">
+        <div className="bg-[#E3F0FF] h-[100px] flex items-center justify-center text-4xl">
           {item.icon && !item.icon.includes(".") ? (
             <span>{item.icon}</span>
           ) : (
-            <span className="font-[var(--font-syne)] text-base sm:text-xl font-extrabold text-[#1251A3]">{item.name.charAt(0)}</span>
+            <span className="font-[var(--font-syne)] text-xl font-extrabold text-[#1251A3]">{item.name.charAt(0)}</span>
           )}
         </div>
 
         {/* Content */}
-        <div className="p-2.5 sm:p-4 space-y-1.5 flex-grow flex flex-col justify-between">
+        <div className="p-4 space-y-2 flex-grow flex flex-col justify-between">
           <div>
-            <h3 className="font-[var(--font-syne)] text-[12px] sm:text-[15px] font-bold text-[#0D1B2A] leading-tight">
+            <h3 className="font-[var(--font-syne)] text-[15px] font-bold text-[#0D1B2A]">
               {item.name}
             </h3>
 
-            <p className="font-[var(--font-dm-sans)] text-[10px] sm:text-[12px] text-[#64748B] leading-normal mt-0.5 line-clamp-2">
+            <p className="font-[var(--font-dm-sans)] text-[12px] text-[#64748B] leading-[1.5] mt-1 line-clamp-2">
               {item.desc}
             </p>
           </div>
 
-          <div className="flex items-center justify-between pt-1 sm:pt-2">
-            <span className="font-[var(--font-dm-mono)] text-[11px] sm:text-[13px] font-semibold text-[#1251A3] truncate max-w-[70%]">
+          <div className="flex items-center justify-between pt-2">
+            <span className="font-[var(--font-dm-mono)] text-[13px] font-semibold text-[#1251A3]">
               {item.price}
             </span>
 
-            <span className="w-5.5 h-5.5 sm:w-7 sm:h-7 bg-[#1251A3] text-white rounded-md flex items-center justify-center hover:bg-[#0A3578] transition flex-shrink-0">
-              <FaPlus size={8} className="sm:hidden" />
-              <FaPlus size={10} className="hidden sm:block" />
+            <span className="w-7 h-7 bg-[#1251A3] text-white rounded-md flex items-center justify-center hover:bg-[#0A3578] transition">
+              <FaPlus size={10} />
             </span>
           </div>
         </div>

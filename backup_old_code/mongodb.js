@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://faizalmansoori2004_db_user:KCY29ssQAmOmqFvZ@muneem-timber-store.nnaijdh.mongodb.net/muneem?retryWrites=true&w=majority&appName=Muneem-Timber-Store";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/muneem";
 
 let cached = global.mongoose;
 
