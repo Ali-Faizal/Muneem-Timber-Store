@@ -66,7 +66,7 @@ export default function ItemsSection() {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1251A3]"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayItems.map((item) => (
               <Link
                 key={item.id}

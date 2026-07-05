@@ -9,13 +9,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-900 text-white px-6 py-8 md:py-16">
+    <footer className="bg-slate-900 text-white px-6 py-16">
       <div className="max-w-7xl mx-auto">
         {/* TOP GRID */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
           {/* 1️⃣ ABOUT / HERITAGE */}
-          <div className="col-span-2 lg:col-span-1 space-y-3">
+          <div className="space-y-3">
             <Link href="/" className="hover:text-[#90CAF9] transition block">
               <h2 className="text-lg font-extrabold">
                 Muneem Timber Store
@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
 
           {/* 4️⃣ CONTACT */}
-          <div className="col-span-2 lg:col-span-1">
+          <div>
             <h3 className="font-bold mb-4 text-sm uppercase tracking-wider">Contact</h3>
             <ul className="space-y-2">
               <li>

@@ -20,8 +20,7 @@ import {
   UserCheck,
   Calculator,
   FileText,
-  BarChart2,
-  MessageSquare
+  BarChart2
 } from "lucide-react";
 
 export default function DashboardLayout({ 
@@ -56,7 +55,6 @@ export default function DashboardLayout({
   // Define Links based on role
   const adminLinks = [
     { label: "Dashboard", href: "/mts-owner-panel-1995/dashboard", icon: LayoutDashboard },
-    { label: "Live Chat Support", href: "/mts-owner-panel-1995/chat", icon: MessageSquare },
     { label: "Orders", href: "/mts-owner-panel-1995/orders", icon: ShoppingCart },
     { label: "Customers", href: "/mts-owner-panel-1995/manage-users", icon: Users },
     { label: "Products", href: "/mts-owner-panel-1995/manage-products", icon: Package },

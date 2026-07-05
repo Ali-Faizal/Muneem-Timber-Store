@@ -60,7 +60,7 @@ export default function ServicesSection() {
         </div>
 
         {/* GRID */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
           {services.map((item, i) => {
             let linkHref = `tel:919580716752`;
             if (item.title.includes("Timber Kiraya")) {

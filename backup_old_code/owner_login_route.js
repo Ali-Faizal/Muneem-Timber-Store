@@ -16,31 +16,6 @@ export async function POST(request) {
       );
     }
 
-    // Demo Bypass account (both owner/user permissions for development/demo mode)
-    if (username.toLowerCase() === "faizal" && password === "809036") {
-      const expiryTimestamp = Date.now() + 24 * 60 * 60 * 1000;
-      const sessionToken = await signSession("Faizal", "faizmsri@gmail.com", "true", expiryTimestamp);
-
-      const response = NextResponse.json({
-        success: true,
-        redirect: "/mts-owner-panel-1995/dashboard",
-        owner: {
-          username: "Faizal",
-          recoveryEmail: "faizmsri@gmail.com"
-        }
-      });
-
-      response.cookies.set("owner_session", sessionToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        expires: new Date(expiryTimestamp),
-        sameSite: "strict"
-      });
-
-      return response;
-    }
-
     // 1. Seed Owner credentials if none exist in the collection
     const ownerCount = await Owner.countDocuments({});
     if (ownerCount === 0) {

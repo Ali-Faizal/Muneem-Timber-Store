@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
+import AIChatbot from "./components/AIChatbot";
 
 // Fonts
 const syne = Syne({
@@ -45,6 +46,7 @@ export default function RootLayout({
 
       <body className={`${syne.variable} ${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
         {children}
+        <AIChatbot />
       </body>
     </html>
   );

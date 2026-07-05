@@ -87,22 +87,39 @@ export default function Navbar() {
 
           <a
             href={`tel:${ctaData.phone}`}
-            className="bg-[#FF6B2B] text-white px-3 py-1.5 rounded-lg text-[10px] font-extrabold hover:bg-[#E55A1F] transition"
+            className="text-black"
           >
-            📞 Call
+            Call
           </a>
+
+          {/* MENU BUTTON */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-black text-2xl"
+          >
+            ☰
+          </button>
         </div>
       </div>
 
-      {/* MOBILE MENU - DIRECTLY DISPLAYED, NO HAMBURGER (SCROLLABLE TAB BAR) */}
-      <div className="md:hidden flex items-center gap-5 overflow-x-auto whitespace-nowrap px-4 py-2 bg-slate-50 border-t border-slate-100 justify-start text-[11px] font-extrabold uppercase tracking-wider text-slate-700 select-none" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-        <Link href="/items" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Items</Link>
-        <Link href="/services" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Services</Link>
-        <Link href="/billing" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Bill Banao</Link>
-        <Link href="/contact" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Contact</Link>
-        <Link href="/location" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Location</Link>
-        <Link href="/rent-summary" className="hover:text-[#1251A3] active:text-[#1251A3] py-1 transition flex-shrink-0">Cart</Link>
-      </div>
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden bg-white px-4 pb-4 space-y-3 text-black z-50 text-xs font-bold uppercase tracking-wide border-t border-slate-100 pt-2">
+          <Link href="/items" className="block py-1">Items</Link>
+          <Link href="/services" className="block py-1">Services</Link>
+          <Link href="/billing" className="block py-1">Bill Banao</Link>
+          <Link href="/contact" className="block py-1">Contact</Link>
+          <Link href="/location" className="block py-1">Location</Link>
+          <Link href="/rent-summary" className="block py-1">Cart / Calculator</Link>
+
+          <a
+            href={`tel:${ctaData.phone}`}
+            className="w-full bg-[#FF6B2B] text-white py-2 rounded-lg mt-2 block text-center font-bold"
+          >
+            📞 Call Now
+          </a>
+        </div>
+      )}
     </nav>
   );
 }

@@ -188,23 +188,4 @@ export const ActivityLog = getModel("ActivityLog", ActivityLogSchema);
 export const DashboardNotification = getModel("DashboardNotification", DashboardNotificationSchema);
 export const UserLoginLog = getModel("UserLoginLog", UserLoginLogSchema);
 
-// 13. ChatMessage Schema
-const ChatMessageSchema = new mongoose.Schema({
-  sessionId: { type: String, required: true },
-  sender: { type: String, enum: ["visitor", "owner", "ai"], required: true },
-  text: { type: String, required: true },
-  visitorName: { type: String, default: "Guest" },
-  timestamp: { type: Date, default: Date.now },
-  isReplied: { type: Boolean, default: false }
-});
-
-// 14. OwnerStatus Schema (tracks when the owner was last active in the chat panel)
-const OwnerStatusSchema = new mongoose.Schema({
-  lastActive: { type: Date, default: Date.now }
-});
-
-export const ChatMessage = getModel("ChatMessage", ChatMessageSchema);
-export const OwnerStatus = getModel("OwnerStatus", OwnerStatusSchema);
-
-
 

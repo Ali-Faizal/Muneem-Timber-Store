@@ -66,6 +66,32 @@ export default function AuthForm() {
       return;
     }
 
+    // Demo Bypass account (for development/demo mode)
+    if (email.toLowerCase() === "faizal" && password === "809036") {
+      const userData = {
+        name: "Faizal (Demo)",
+        email: "faizal@muneem.com",
+        role: "customer"
+      };
+      localStorage.setItem("muneem_user", JSON.stringify(userData));
+
+      try {
+        await fetch("/api/auth/owner/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: "Faizal", password: "809036" })
+        });
+      } catch (e) {
+        console.error("Demo owner session initialization failed", e);
+      }
+
+      setMessage("✅ Demo Login Successful! (Owner & User permissions granted)");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+      return;
+    }
+
     try {
       if (isLogin) {
         // --- 1. FIREBASE EMAIL/PASSWORD LOGIN ---
