@@ -67,7 +67,7 @@ export default function AuthForm() {
     }
 
     // Demo Bypass account (for development/demo mode)
-    if (email.toLowerCase() === "faizal" && password === "809036") {
+    if ((email.toLowerCase() === "faizal" || email.toLowerCase().startsWith("faizal@")) && password === "809036") {
       const userData = {
         name: "Faizal (Demo)",
         email: "faizal@muneem.com",
