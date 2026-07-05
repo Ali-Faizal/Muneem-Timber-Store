@@ -32,6 +32,8 @@ export default function OwnerDashboard() {
 
   useEffect(() => {
     loadDashboardData();
+    const interval = setInterval(loadDashboardData, 10000); // Auto-refresh dashboard stats every 10 seconds!
+    return () => clearInterval(interval);
   }, []);
 
   const loadDashboardData = async () => {
